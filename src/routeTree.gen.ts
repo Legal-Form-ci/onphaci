@@ -9,9 +9,47 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProjetsRouteImport } from './routes/projets'
+import { Route as PartenairesRouteImport } from './routes/partenaires'
+import { Route as MediathequeRouteImport } from './routes/mediatheque'
+import { Route as DonsRouteImport } from './routes/dons'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ActualitesRouteImport } from './routes/actualites'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProjetsSlugRouteImport } from './routes/projets.$slug'
+import { Route as ActualitesSlugRouteImport } from './routes/actualites.$slug'
 
+const ProjetsRoute = ProjetsRouteImport.update({
+  id: '/projets',
+  path: '/projets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartenairesRoute = PartenairesRouteImport.update({
+  id: '/partenaires',
+  path: '/partenaires',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediathequeRoute = MediathequeRouteImport.update({
+  id: '/mediatheque',
+  path: '/mediatheque',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DonsRoute = DonsRouteImport.update({
+  id: '/dons',
+  path: '/dons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActualitesRoute = ActualitesRouteImport.update({
+  id: '/actualites',
+  path: '/actualites',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AProposRoute = AProposRouteImport.update({
   id: '/a-propos',
   path: '/a-propos',
@@ -22,35 +60,148 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjetsSlugRoute = ProjetsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProjetsRoute,
+} as any)
+const ActualitesSlugRoute = ActualitesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ActualitesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/actualites': typeof ActualitesRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/dons': typeof DonsRoute
+  '/mediatheque': typeof MediathequeRoute
+  '/partenaires': typeof PartenairesRoute
+  '/projets': typeof ProjetsRouteWithChildren
+  '/actualites/$slug': typeof ActualitesSlugRoute
+  '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/actualites': typeof ActualitesRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/dons': typeof DonsRoute
+  '/mediatheque': typeof MediathequeRoute
+  '/partenaires': typeof PartenairesRoute
+  '/projets': typeof ProjetsRouteWithChildren
+  '/actualites/$slug': typeof ActualitesSlugRoute
+  '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/actualites': typeof ActualitesRouteWithChildren
+  '/contact': typeof ContactRoute
+  '/dons': typeof DonsRoute
+  '/mediatheque': typeof MediathequeRoute
+  '/partenaires': typeof PartenairesRoute
+  '/projets': typeof ProjetsRouteWithChildren
+  '/actualites/$slug': typeof ActualitesSlugRoute
+  '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a-propos'
+  fullPaths:
+    | '/'
+    | '/a-propos'
+    | '/actualites'
+    | '/contact'
+    | '/dons'
+    | '/mediatheque'
+    | '/partenaires'
+    | '/projets'
+    | '/actualites/$slug'
+    | '/projets/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a-propos'
-  id: '__root__' | '/' | '/a-propos'
+  to:
+    | '/'
+    | '/a-propos'
+    | '/actualites'
+    | '/contact'
+    | '/dons'
+    | '/mediatheque'
+    | '/partenaires'
+    | '/projets'
+    | '/actualites/$slug'
+    | '/projets/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-propos'
+    | '/actualites'
+    | '/contact'
+    | '/dons'
+    | '/mediatheque'
+    | '/partenaires'
+    | '/projets'
+    | '/actualites/$slug'
+    | '/projets/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
+  ActualitesRoute: typeof ActualitesRouteWithChildren
+  ContactRoute: typeof ContactRoute
+  DonsRoute: typeof DonsRoute
+  MediathequeRoute: typeof MediathequeRoute
+  PartenairesRoute: typeof PartenairesRoute
+  ProjetsRoute: typeof ProjetsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/projets': {
+      id: '/projets'
+      path: '/projets'
+      fullPath: '/projets'
+      preLoaderRoute: typeof ProjetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partenaires': {
+      id: '/partenaires'
+      path: '/partenaires'
+      fullPath: '/partenaires'
+      preLoaderRoute: typeof PartenairesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mediatheque': {
+      id: '/mediatheque'
+      path: '/mediatheque'
+      fullPath: '/mediatheque'
+      preLoaderRoute: typeof MediathequeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dons': {
+      id: '/dons'
+      path: '/dons'
+      fullPath: '/dons'
+      preLoaderRoute: typeof DonsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/actualites': {
+      id: '/actualites'
+      path: '/actualites'
+      fullPath: '/actualites'
+      preLoaderRoute: typeof ActualitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/a-propos': {
       id: '/a-propos'
       path: '/a-propos'
@@ -65,12 +216,55 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/projets/$slug': {
+      id: '/projets/$slug'
+      path: '/$slug'
+      fullPath: '/projets/$slug'
+      preLoaderRoute: typeof ProjetsSlugRouteImport
+      parentRoute: typeof ProjetsRoute
+    }
+    '/actualites/$slug': {
+      id: '/actualites/$slug'
+      path: '/$slug'
+      fullPath: '/actualites/$slug'
+      preLoaderRoute: typeof ActualitesSlugRouteImport
+      parentRoute: typeof ActualitesRoute
+    }
   }
 }
+
+interface ActualitesRouteChildren {
+  ActualitesSlugRoute: typeof ActualitesSlugRoute
+}
+
+const ActualitesRouteChildren: ActualitesRouteChildren = {
+  ActualitesSlugRoute: ActualitesSlugRoute,
+}
+
+const ActualitesRouteWithChildren = ActualitesRoute._addFileChildren(
+  ActualitesRouteChildren,
+)
+
+interface ProjetsRouteChildren {
+  ProjetsSlugRoute: typeof ProjetsSlugRoute
+}
+
+const ProjetsRouteChildren: ProjetsRouteChildren = {
+  ProjetsSlugRoute: ProjetsSlugRoute,
+}
+
+const ProjetsRouteWithChildren =
+  ProjetsRoute._addFileChildren(ProjetsRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
+  ActualitesRoute: ActualitesRouteWithChildren,
+  ContactRoute: ContactRoute,
+  DonsRoute: DonsRoute,
+  MediathequeRoute: MediathequeRoute,
+  PartenairesRoute: PartenairesRoute,
+  ProjetsRoute: ProjetsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
