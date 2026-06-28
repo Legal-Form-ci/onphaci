@@ -82,11 +82,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "ONPHA-CI — Inclusion des personnes sourdes en Côte d'Ivoire" },
       { name: "description", content: "ONPHA-CI agit depuis 2010 pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
       { name: "author", content: "ONPHA-CI" },
-      { property: "og:title", content: "ONPHA-CI — Organisation Nationale des Parents pour Handicapés Auditifs" },
-      { property: "og:description", content: "Plaidoyer, éducation inclusive, santé et formation en langue des signes en Côte d'Ivoire." },
+      { property: "og:title", content: "ONPHA-CI — Inclusion des personnes sourdes en Côte d'Ivoire" },
+      { property: "og:description", content: "ONPHA-CI agit depuis 2010 pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "ONPHA-CI — Inclusion des personnes sourdes en Côte d'Ivoire" },
+      { name: "twitter:description", content: "ONPHA-CI agit depuis 2010 pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/OI6nUHN0rMdlKjHmlXGUEQqHcM52/social-images/social-1782679800436-220371.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/OI6nUHN0rMdlKjHmlXGUEQqHcM52/social-images/social-1782679800436-220371.webp" },
     ],
     links: [
       {
