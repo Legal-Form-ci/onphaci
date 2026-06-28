@@ -31,7 +31,7 @@ export const Route = createFileRoute("/projets/$slug")({
 });
 
 function ProjectDetail() {
-  const p = Route.useLoaderData();
+  const p = Route.useLoaderData() as import("@/data/projects").Project;
   return (
     <>
       <section className="border-b border-border bg-surface-alt">
