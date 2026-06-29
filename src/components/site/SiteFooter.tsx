@@ -2,6 +2,11 @@ import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, Facebook, Youtube } from "lucide-react";
 import logo from "@/assets/onpha-logo.png.asset.json";
 
+const WA_MSG = encodeURIComponent(
+  "Bonjour Monsieur KOFFI, j'ai découvert votre travail sur la plateforme ONPHA-CI et je serais ravi(e) d'échanger avec vous au sujet d'un projet similaire. Merci d'avance pour votre retour."
+);
+const WA_URL = `https://wa.me/2250759566087?text=${WA_MSG}`;
+
 export function SiteFooter() {
   return (
     <footer className="mt-24 border-t border-border bg-surface-alt">
@@ -44,8 +49,28 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-4 py-5 text-xs text-ink-soft sm:flex-row sm:items-center lg:px-8">
-          <p>© {new Date().getFullYear()} ONPHA-CI. Tous droits réservés.</p>
-          <p>Refonte par <span className="font-medium text-ink">IKNOV Consulting</span></p>
+          <p>© {new Date().getFullYear()} ONPHA-CI. Tous droits réservés. · <Link to="/confidentialite" className="hover:text-brand">Politique de confidentialité</Link></p>
+          <p>
+            Plateforme développée par{" "}
+            <a
+              href="https://ikoffi.agricapital.ci"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-ink hover:text-brand"
+            >
+              Inocent KOFFI
+            </a>{" "}
+            —{" "}
+            <a
+              href={WA_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-ink hover:text-brand"
+              aria-label="Envoyer un message WhatsApp à Inocent KOFFI"
+            >
+              +225 07 59 56 60 87
+            </a>
+          </p>
         </div>
       </div>
     </footer>

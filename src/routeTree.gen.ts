@@ -14,10 +14,14 @@ import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as MediathequeRouteImport } from './routes/mediatheque'
 import { Route as DonsRouteImport } from './routes/dons'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ActualitesRouteImport } from './routes/actualites'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjetsSlugRouteImport } from './routes/projets.$slug'
+import { Route as AnnuaireOrganisationsRouteImport } from './routes/annuaire.organisations'
+import { Route as AnnuaireEcolesSpecialiseesRouteImport } from './routes/annuaire.ecoles-specialisees'
+import { Route as AnnuaireEcolesInclusivesRouteImport } from './routes/annuaire.ecoles-inclusives'
 import { Route as ActualitesSlugRouteImport } from './routes/actualites.$slug'
 
 const ProjetsRoute = ProjetsRouteImport.update({
@@ -45,6 +49,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ActualitesRoute = ActualitesRouteImport.update({
   id: '/actualites',
   path: '/actualites',
@@ -65,6 +74,23 @@ const ProjetsSlugRoute = ProjetsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ProjetsRoute,
 } as any)
+const AnnuaireOrganisationsRoute = AnnuaireOrganisationsRouteImport.update({
+  id: '/annuaire/organisations',
+  path: '/annuaire/organisations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AnnuaireEcolesSpecialiseesRoute =
+  AnnuaireEcolesSpecialiseesRouteImport.update({
+    id: '/annuaire/ecoles-specialisees',
+    path: '/annuaire/ecoles-specialisees',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const AnnuaireEcolesInclusivesRoute =
+  AnnuaireEcolesInclusivesRouteImport.update({
+    id: '/annuaire/ecoles-inclusives',
+    path: '/annuaire/ecoles-inclusives',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ActualitesSlugRoute = ActualitesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -75,24 +101,32 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/actualites': typeof ActualitesRouteWithChildren
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
   '/mediatheque': typeof MediathequeRoute
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
   '/actualites/$slug': typeof ActualitesSlugRoute
+  '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
+  '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
+  '/annuaire/organisations': typeof AnnuaireOrganisationsRoute
   '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/actualites': typeof ActualitesRouteWithChildren
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
   '/mediatheque': typeof MediathequeRoute
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
   '/actualites/$slug': typeof ActualitesSlugRoute
+  '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
+  '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
+  '/annuaire/organisations': typeof AnnuaireOrganisationsRoute
   '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRoutesById {
@@ -100,12 +134,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/actualites': typeof ActualitesRouteWithChildren
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
   '/mediatheque': typeof MediathequeRoute
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
   '/actualites/$slug': typeof ActualitesSlugRoute
+  '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
+  '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
+  '/annuaire/organisations': typeof AnnuaireOrganisationsRoute
   '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRouteTypes {
@@ -114,36 +152,48 @@ export interface FileRouteTypes {
     | '/'
     | '/a-propos'
     | '/actualites'
+    | '/confidentialite'
     | '/contact'
     | '/dons'
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
     | '/actualites/$slug'
+    | '/annuaire/ecoles-inclusives'
+    | '/annuaire/ecoles-specialisees'
+    | '/annuaire/organisations'
     | '/projets/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/a-propos'
     | '/actualites'
+    | '/confidentialite'
     | '/contact'
     | '/dons'
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
     | '/actualites/$slug'
+    | '/annuaire/ecoles-inclusives'
+    | '/annuaire/ecoles-specialisees'
+    | '/annuaire/organisations'
     | '/projets/$slug'
   id:
     | '__root__'
     | '/'
     | '/a-propos'
     | '/actualites'
+    | '/confidentialite'
     | '/contact'
     | '/dons'
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
     | '/actualites/$slug'
+    | '/annuaire/ecoles-inclusives'
+    | '/annuaire/ecoles-specialisees'
+    | '/annuaire/organisations'
     | '/projets/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -151,11 +201,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
   ActualitesRoute: typeof ActualitesRouteWithChildren
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   DonsRoute: typeof DonsRoute
   MediathequeRoute: typeof MediathequeRoute
   PartenairesRoute: typeof PartenairesRoute
   ProjetsRoute: typeof ProjetsRouteWithChildren
+  AnnuaireEcolesInclusivesRoute: typeof AnnuaireEcolesInclusivesRoute
+  AnnuaireEcolesSpecialiseesRoute: typeof AnnuaireEcolesSpecialiseesRoute
+  AnnuaireOrganisationsRoute: typeof AnnuaireOrganisationsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -195,6 +249,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/actualites': {
       id: '/actualites'
       path: '/actualites'
@@ -222,6 +283,27 @@ declare module '@tanstack/react-router' {
       fullPath: '/projets/$slug'
       preLoaderRoute: typeof ProjetsSlugRouteImport
       parentRoute: typeof ProjetsRoute
+    }
+    '/annuaire/organisations': {
+      id: '/annuaire/organisations'
+      path: '/annuaire/organisations'
+      fullPath: '/annuaire/organisations'
+      preLoaderRoute: typeof AnnuaireOrganisationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/annuaire/ecoles-specialisees': {
+      id: '/annuaire/ecoles-specialisees'
+      path: '/annuaire/ecoles-specialisees'
+      fullPath: '/annuaire/ecoles-specialisees'
+      preLoaderRoute: typeof AnnuaireEcolesSpecialiseesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/annuaire/ecoles-inclusives': {
+      id: '/annuaire/ecoles-inclusives'
+      path: '/annuaire/ecoles-inclusives'
+      fullPath: '/annuaire/ecoles-inclusives'
+      preLoaderRoute: typeof AnnuaireEcolesInclusivesRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/actualites/$slug': {
       id: '/actualites/$slug'
@@ -260,11 +342,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
   ActualitesRoute: ActualitesRouteWithChildren,
+  ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   DonsRoute: DonsRoute,
   MediathequeRoute: MediathequeRoute,
   PartenairesRoute: PartenairesRoute,
   ProjetsRoute: ProjetsRouteWithChildren,
+  AnnuaireEcolesInclusivesRoute: AnnuaireEcolesInclusivesRoute,
+  AnnuaireEcolesSpecialiseesRoute: AnnuaireEcolesSpecialiseesRoute,
+  AnnuaireOrganisationsRoute: AnnuaireOrganisationsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

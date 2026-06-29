@@ -56,8 +56,13 @@ function ArticleDetail() {
         </div>
       )}
       <article className="mx-auto max-w-3xl px-4 py-12 lg:px-8">
+        {a.excerpt && (
+          <p className="mb-10 border-l-4 border-accent-orange pl-5 font-display text-xl italic leading-relaxed text-ink-soft">
+            {a.excerpt}
+          </p>
+        )}
         <div
-          className="prose prose-lg max-w-none text-ink prose-headings:font-display prose-a:text-brand prose-img:rounded-xl"
+          className="article-prose"
           dangerouslySetInnerHTML={{ __html: a.content_html }}
         />
         <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
