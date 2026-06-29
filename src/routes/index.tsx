@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Link } from "@tanstack/react-router";
-import { ArrowRight, Heart, Users, Globe2, Calendar, Sparkles } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { ArrowRight, Heart, Users, Globe2, Calendar, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { ARTICLES, formatDate } from "@/data/articles";
 import { PROJECTS } from "@/data/projects";
 import { PARTNERS } from "@/data/partners";
+import { AnimatedCounter } from "@/components/site/AnimatedCounter";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -19,49 +20,29 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const latest = ARTICLES.slice(0, 3);
+  const heroSlides = ARTICLES.filter((a) => !!a.cover).slice(0, 5);
   const featured = PROJECTS.slice(0, 3);
   return (
     <>
-      {/* HERO */}
-      <section className="relative overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
-        <div className="absolute inset-0 opacity-20" aria-hidden style={{
-          backgroundImage: "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0, transparent 40%), radial-gradient(circle at 80% 60%, rgba(255,255,255,0.25) 0, transparent 45%)",
-        }} />
-        <div className="relative mx-auto grid max-w-7xl gap-10 px-4 py-20 text-white lg:grid-cols-[1.3fr_1fr] lg:items-center lg:py-28 lg:px-8">
-          <div>
-            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
-              <Sparkles className="size-3.5" /> ONG ivoirienne — depuis 2010
-            </span>
-            <h1 className="mt-5 text-balance text-4xl font-bold leading-[1.05] sm:text-5xl lg:text-6xl">
-              Pour que chaque enfant sourd ait <span className="text-[oklch(0.85_0.15_70)]">sa voix dans la société.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-lg text-white/85">
-              L'Organisation Nationale des Parents pour Handicapés Auditifs de Côte d'Ivoire défend
-              les droits, la santé et l'éducation des personnes sourdes et malentendantes.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/dons" className="inline-flex items-center gap-2 rounded-full bg-accent-orange px-6 py-3 text-sm font-semibold text-accent-orange-foreground shadow-[var(--shadow-cta)] transition hover:brightness-110">
-                <Heart className="size-4" /> Faire un don
-              </Link>
-              <Link to="/projets" className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/20">
-                Nos projets <ArrowRight className="size-4" />
-              </Link>
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
-            {[
-              { k: "14", l: "années d'engagement", i: Calendar },
-              { k: "7", l: "pays touchés (DéfiSens'AO)", i: Globe2 },
-              { k: "29+", l: "actions documentées", i: Sparkles },
-              { k: "1 000s", l: "bénéficiaires", i: Users },
-            ].map(({ k, l, i: Icon }) => (
-              <div key={l} className="rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur">
-                <Icon className="size-5 text-[oklch(0.85_0.15_70)]" aria-hidden />
-                <div className="mt-3 font-display text-3xl font-bold">{k}</div>
-                <div className="mt-1 text-xs text-white/80">{l}</div>
+      <HeroCarousel slides={heroSlides} />
+
+      {/* IMPACT — compteurs animés */}
+      <section className="border-b border-border bg-surface-alt">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-2 px-4 py-10 sm:grid-cols-4 sm:gap-6 lg:px-8">
+          {[
+            { n: 14, s: "", l: "années d'engagement", i: Calendar },
+            { n: 7, s: "", l: "pays touchés (DéfiSens'AO)", i: Globe2 },
+            { n: 29, s: "+", l: "actions documentées", i: Sparkles },
+            { n: 1500, s: "+", l: "bénéficiaires directs", i: Users },
+          ].map(({ n, s, l, i: Icon }) => (
+            <div key={l} className="flex flex-col items-start gap-2 rounded-2xl p-2 sm:p-4">
+              <span className="grid size-10 place-items-center rounded-full bg-brand-soft text-brand"><Icon className="size-5" /></span>
+              <div className="font-display text-3xl font-bold text-ink sm:text-4xl">
+                <AnimatedCounter end={n} suffix={s} />
               </div>
-            ))}
-          </div>
+              <div className="text-xs text-ink-soft sm:text-sm">{l}</div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -198,5 +179,115 @@ function Index() {
         </div>
       </section>
     </>
+  );
+}
+
+/* ============== Hero Carousel — actualités en avant ============== */
+function HeroCarousel({ slides }: { slides: typeof ARTICLES }) {
+  const [i, setI] = useState(0);
+  const total = slides.length || 1;
+
+  useEffect(() => {
+    if (slides.length < 2) return;
+    const t = setInterval(() => setI((v) => (v + 1) % total), 6000);
+    return () => clearInterval(t);
+  }, [slides.length, total]);
+
+  const current = slides[i];
+
+  return (
+    <section className="relative isolate overflow-hidden bg-ink">
+      {/* Slides */}
+      <div className="relative h-[560px] sm:h-[600px] lg:h-[640px]">
+        {slides.map((s, idx) => (
+          <div
+            key={s.slug}
+            aria-hidden={idx !== i}
+            className={`absolute inset-0 transition-opacity duration-700 ${idx === i ? "opacity-100" : "opacity-0"}`}
+          >
+            {s.cover && (
+              <img
+                src={s.cover}
+                alt=""
+                loading={idx === 0 ? "eager" : "lazy"}
+                decoding="async"
+                className="size-full object-cover"
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/65 to-ink/20" aria-hidden />
+          </div>
+        ))}
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-end px-4 pb-14 lg:px-8 lg:pb-20">
+          <div className="max-w-3xl text-white">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-xs font-medium backdrop-blur">
+              <Sparkles className="size-3.5" /> Actualité — ONPHA-CI
+            </span>
+            {current && (
+              <>
+                <p className="mt-4 text-xs uppercase tracking-widest text-white/70">
+                  <span className="rounded-full bg-accent-orange px-2 py-0.5 font-semibold text-accent-orange-foreground">{current.category}</span>
+                  <span className="ml-3">{formatDate(current.date)}</span>
+                </p>
+                <h1 className="mt-3 text-balance font-display text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+                  {current.title}
+                </h1>
+                {current.excerpt && (
+                  <p className="mt-4 max-w-2xl text-base text-white/85 sm:text-lg line-clamp-3">
+                    {current.excerpt}
+                  </p>
+                )}
+                <div className="mt-7 flex flex-wrap gap-3">
+                  <Link
+                    to="/actualites/$slug"
+                    params={{ slug: current.slug }}
+                    className="inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-ink shadow-lg transition hover:bg-white/90"
+                  >
+                    Lire l'article <ArrowRight className="size-4" />
+                  </Link>
+                  <Link
+                    to="/dons"
+                    className="inline-flex items-center gap-2 rounded-full bg-accent-orange px-6 py-3 text-sm font-semibold text-accent-orange-foreground shadow-[var(--shadow-cta)] transition hover:brightness-110"
+                  >
+                    <Heart className="size-4" /> Faire un don
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Controls */}
+        {slides.length > 1 && (
+          <>
+            <button
+              aria-label="Précédent"
+              onClick={() => setI((v) => (v - 1 + total) % total)}
+              className="absolute left-3 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/15 p-3 text-white backdrop-blur transition hover:bg-white/25 md:block"
+            >
+              <ChevronLeft className="size-5" />
+            </button>
+            <button
+              aria-label="Suivant"
+              onClick={() => setI((v) => (v + 1) % total)}
+              className="absolute right-3 top-1/2 z-20 hidden -translate-y-1/2 rounded-full bg-white/15 p-3 text-white backdrop-blur transition hover:bg-white/25 md:block"
+            >
+              <ChevronRight className="size-5" />
+            </button>
+            <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-1.5">
+              {slides.map((_, idx) => (
+                <button
+                  key={idx}
+                  aria-label={`Aller au slide ${idx + 1}`}
+                  onClick={() => setI(idx)}
+                  className={`h-1.5 rounded-full transition-all ${idx === i ? "w-8 bg-white" : "w-3 bg-white/40 hover:bg-white/70"}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </section>
   );
 }
