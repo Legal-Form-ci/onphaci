@@ -20,7 +20,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const latest = ARTICLES.slice(0, 3);
-  const heroSlides = ARTICLES.filter((a) => !!a.cover).slice(0, 5);
+  const heroSlides = ARTICLES.filter((a) => !!a.cover);
   const featured = PROJECTS.slice(0, 3);
   return (
     <>

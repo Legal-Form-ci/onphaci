@@ -51,7 +51,7 @@ export function SiteFooter() {
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-4 py-5 text-xs text-ink-soft sm:flex-row sm:items-center lg:px-8">
           <p>© {new Date().getFullYear()} ONPHA-CI. Tous droits réservés. · <Link to="/confidentialite" className="hover:text-brand">Politique de confidentialité</Link></p>
           <p>
-            Plateforme développée par{" "}
+            Par{" "}
             <a
               href="https://ikoffi.agricapital.ci"
               target="_blank"
@@ -59,8 +59,8 @@ export function SiteFooter() {
               className="font-semibold text-ink hover:text-brand"
             >
               Inocent KOFFI
-            </a>{" "}
-            —{" "}
+            </a>
+            -
             <a
               href={WA_URL}
               target="_blank"
