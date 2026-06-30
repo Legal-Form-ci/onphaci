@@ -20,7 +20,7 @@ export function SiteFooter() {
           <ul className="mt-6 space-y-2 text-sm text-ink-soft">
             <li className="flex items-start gap-2"><MapPin className="mt-0.5 size-4 text-brand" /> Yopougon, Abidjan, Côte d'Ivoire</li>
             <li className="flex items-start gap-2"><Mail className="mt-0.5 size-4 text-brand" /> onphaci@gmail.com</li>
-            <li className="flex items-start gap-2"><Phone className="mt-0.5 size-4 text-brand" /> +225 — sur demande</li>
+            <li className="flex items-start gap-2"><Phone className="mt-0.5 size-4 text-brand" /> +225 07 07 34 85 85 / 07 79 76 85 82</li>
           </ul>
         </div>
         <div>
@@ -42,8 +42,8 @@ export function SiteFooter() {
             <li><Link to="/partenaires" className="text-ink-soft hover:text-brand">Nous soutenir</Link></li>
           </ul>
           <div className="mt-6 flex gap-3" aria-label="Réseaux sociaux">
-            <a href="#" aria-label="Facebook" className="inline-flex size-10 items-center justify-center rounded-full border border-border text-ink-soft hover:border-brand hover:text-brand"><Facebook className="size-4" /></a>
-            <a href="#" aria-label="YouTube" className="inline-flex size-10 items-center justify-center rounded-full border border-border text-ink-soft hover:border-brand hover:text-brand"><Youtube className="size-4" /></a>
+            <a href="https://www.facebook.com/onphaci" target="_blank" rel="noopener noreferrer" aria-label="Facebook ONPHA-CI" className="inline-flex size-10 items-center justify-center rounded-full border border-border text-ink-soft hover:border-brand hover:text-brand"><Facebook className="size-4" /></a>
+            <a href="https://www.youtube.com/@onphaci" target="_blank" rel="noopener noreferrer" aria-label="YouTube ONPHA-CI" className="inline-flex size-10 items-center justify-center rounded-full border border-border text-ink-soft hover:border-brand hover:text-brand"><Youtube className="size-4" /></a>
           </div>
         </div>
       </div>
