@@ -6,11 +6,8 @@ import { createServerFn } from "@tanstack/react-start";
  * UPDATE grant on the table itself. Each call adds exactly +1.
  */
 export const incrementVisitor = createServerFn({ method: "POST" }).handler(async () => {
-  const { createClient } = await import("@supabase/supabase-js");
-  const url = process.env.SUPABASE_URL!;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY!;
-  const sb = createClient(url, key, { auth: { persistSession: false } });
-  const { data, error } = await sb.rpc("increment_visitor_counter");
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const { data, error } = await supabaseAdmin.rpc("increment_visitor_counter");
   if (error) return { value: null as number | null };
   return { value: (data as number) ?? null };
 });
