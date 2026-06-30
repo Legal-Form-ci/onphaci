@@ -13,7 +13,6 @@ const NAV: NavItem[] = [
   { to: "/a-propos", label: "Historique" },
   { to: "/actualites", label: "Actualité" },
   { to: "/dons", label: "Dons" },
-  { to: "/contact", label: "SOS" },
   { to: "/projets", label: "Projets" },
   {
     label: "Annuaire",
@@ -48,8 +47,8 @@ export function SiteHeader() {
           <div className="flex items-center gap-4">
             <VisitorCounter />
             <span className="text-ink-soft/70">Suivez-nous :</span>
-            <a href="#" aria-label="Facebook" className="hover:text-brand"><Facebook className="size-3.5" /></a>
-            <a href="#" aria-label="YouTube" className="hover:text-brand"><Youtube className="size-3.5" /></a>
+            <a href="https://www.facebook.com/onphaci" target="_blank" rel="noopener noreferrer" aria-label="Facebook ONPHA-CI" className="hover:text-brand"><Facebook className="size-3.5" /></a>
+            <a href="https://www.youtube.com/@onphaci" target="_blank" rel="noopener noreferrer" aria-label="YouTube ONPHA-CI" className="hover:text-brand"><Youtube className="size-3.5" /></a>
           </div>
         </div>
       </div>

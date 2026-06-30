@@ -5,8 +5,10 @@ import { incrementVisitor, getVisitorCount } from "@/lib/site-stats.functions";
 
 const SESSION_KEY = "onpha_visit_counted";
 
+const FALLBACK = 33897;
+
 export function VisitorCounter() {
-  const [value, setValue] = useState<number | null>(null);
+  const [value, setValue] = useState<number>(FALLBACK);
   const inc = useServerFn(incrementVisitor);
   const get = useServerFn(getVisitorCount);
 
@@ -20,7 +22,7 @@ export function VisitorCounter() {
           setValue(r.value);
           if (!counted) sessionStorage.setItem(SESSION_KEY, "1");
         }
-      } catch { /* silent */ }
+      } catch { /* silent — keep fallback */ }
     };
     run();
     return () => { cancelled = true; };
@@ -30,10 +32,10 @@ export function VisitorCounter() {
     <span
       className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-2.5 py-1 text-xs font-semibold text-brand"
       title="Visiteurs depuis le lancement de la plateforme"
-      aria-label={value ? `${value.toLocaleString("fr-FR")} visiteurs` : "Compteur de visiteurs"}
+      aria-label={`${value.toLocaleString("fr-FR")} visiteurs`}
     >
       <Eye className="size-3.5" aria-hidden />
-      {value != null ? value.toLocaleString("fr-FR") : "—"}
+      {value.toLocaleString("fr-FR")}
     </span>
   );
 }
