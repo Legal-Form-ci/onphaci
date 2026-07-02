@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Heart, ChevronDown, Mail, Phone, Facebook, Youtube } from "lucide-react";
-import logo from "@/assets/onpha-logo.png.asset.json";
 import { VisitorCounter } from "./VisitorCounter";
+
+const LOGO_SRC = "/onpha-logo.png";
 
 type NavItem =
   | { to: string; label: string }
@@ -56,7 +57,7 @@ export function SiteHeader() {
       {/* Main bar */}
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
         <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="ONPHA-CI accueil">
-          <img src={logo.url} alt="Logo ONPHA-CI" className="h-12 w-auto" />
+          <img src={LOGO_SRC} alt="Logo ONPHA-CI" className="h-12 w-auto" width={160} height={48} />
         </Link>
         <nav className="hidden xl:flex items-center" aria-label="Navigation principale">
           {NAV.map((n) => "children" in n ? (

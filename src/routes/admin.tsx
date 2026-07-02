@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Lock, ShieldCheck, LogOut, Loader2 } from "lucide-react";
+import { Lock, LogOut, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { bootstrapAdmin } from "@/lib/admin.functions";
+import { AdminDashboard } from "@/components/admin/AdminDashboard";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({ meta: [{ title: "Administration — ONPHA-CI" }, { name: "robots", content: "noindex,nofollow" }] }),
@@ -80,38 +81,11 @@ function AdminGate() {
 
   // admin
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 lg:px-8">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <span className="grid size-12 place-items-center rounded-full bg-brand-soft text-brand"><ShieldCheck className="size-6" /></span>
-          <div>
-            <h1 className="font-display text-2xl font-bold text-ink">Tableau de bord administrateur</h1>
-            <p className="text-sm text-ink-soft">Bienvenue — gérez le contenu de la plateforme.</p>
-          </div>
-        </div>
-        <button onClick={onLogout} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:text-brand"><LogOut className="size-4" /> Déconnexion</button>
-      </div>
-
-      <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {[
-          ["Articles & actualités", "Créer, éditer, publier"],
-          ["Projets", "Gérer la liste des projets"],
-          ["Partenaires", "Logos et catégories"],
-          ["Médiathèque", "Images et vidéos"],
-          ["Utilisateurs & rôles", "Inviter un éditeur"],
-          ["Paramètres", "Configuration générale"],
-        ].map(([t, d]) => (
-          <div key={t} className="rounded-2xl border border-border bg-card p-6">
-            <h3 className="font-display text-lg font-semibold text-ink">{t}</h3>
-            <p className="mt-1 text-sm text-ink-soft">{d}</p>
-            <p className="mt-4 text-xs font-medium text-accent-orange">Module en cours de livraison</p>
-          </div>
-        ))}
-      </div>
-
-      <p className="mt-10 text-xs text-ink-soft">
+    <>
+      <AdminDashboard onLogout={onLogout} />
+      <p className="mx-auto mb-10 max-w-7xl px-4 text-xs text-ink-soft lg:px-8">
         <Link to="/" className="hover:text-brand">← Retour au site public</Link>
       </p>
-    </section>
+    </>
   );
 }

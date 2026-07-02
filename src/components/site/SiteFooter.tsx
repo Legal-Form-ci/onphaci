@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, Facebook, Youtube } from "lucide-react";
-import logo from "@/assets/onpha-logo.png.asset.json";
+
+const LOGO_SRC = "/onpha-logo.png";
 
 const WA_MSG = encodeURIComponent(
   "Bonjour Monsieur KOFFI, j'ai découvert votre travail sur la plateforme ONPHA-CI et je serais ravi(e) d'échanger avec vous au sujet d'un projet similaire. Merci d'avance pour votre retour."
@@ -12,7 +13,7 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-border bg-surface-alt">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-4 lg:px-8">
         <div className="lg:col-span-2">
-          <img src={logo.url} alt="ONPHA-CI" className="h-14 w-auto" />
+          <img src={LOGO_SRC} alt="ONPHA-CI" className="h-14 w-auto" width={200} height={56} />
           <p className="mt-4 max-w-md text-sm leading-relaxed text-ink-soft">
             Organisation Nationale des Parents pour Handicapés Auditifs de Côte d'Ivoire. Depuis 2010,
             nous œuvrons pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes.
