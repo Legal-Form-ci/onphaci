@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Heart, ChevronDown, Mail, Phone, Facebook, Youtube } from "lucide-react";
+import { Menu, X, Heart, ChevronDown, Mail, Phone, Facebook, Youtube, Instagram, Linkedin } from "lucide-react";
 import { VisitorCounter } from "./VisitorCounter";
 
 const LOGO_SRC = "/onpha-logo.png";
@@ -49,7 +49,10 @@ export function SiteHeader() {
             <VisitorCounter />
             <span className="text-ink-soft/70">Suivez-nous :</span>
             <a href="https://www.facebook.com/onphaci" target="_blank" rel="noopener noreferrer" aria-label="Facebook ONPHA-CI" className="hover:text-brand"><Facebook className="size-3.5" /></a>
-            <a href="https://www.youtube.com/@onphaci" target="_blank" rel="noopener noreferrer" aria-label="YouTube ONPHA-CI" className="hover:text-brand"><Youtube className="size-3.5" /></a>
+            <a href="https://www.youtube.com/channel/UCxEMvmmxwNEnpx6vB2A4kjw" target="_blank" rel="noopener noreferrer" aria-label="YouTube ONPHA-CI" className="hover:text-brand"><Youtube className="size-3.5" /></a>
+            <a href="https://www.instagram.com/onphaciauditif/" target="_blank" rel="noopener noreferrer" aria-label="Instagram ONPHA-CI" className="hover:text-brand"><Instagram className="size-3.5" /></a>
+            <a href="https://www.linkedin.com/company/99834755" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn ONPHA-CI" className="hover:text-brand"><Linkedin className="size-3.5" /></a>
+            <a href="https://www.tiktok.com/@onphaci.auditif" target="_blank" rel="noopener noreferrer" aria-label="TikTok ONPHA-CI" className="hover:text-brand font-bold text-[10px]">TikTok</a>
           </div>
         </div>
       </div>
