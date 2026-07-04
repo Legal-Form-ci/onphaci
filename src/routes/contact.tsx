@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { Mail, MapPin, Phone, Send } from "lucide-react";
 import { useState } from "react";
+import { IvoryCoastMap } from "@/components/site/IvoryCoastMap";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -24,15 +25,8 @@ function ContactPage() {
         <aside className="space-y-6">
           <InfoLine icon={MapPin} title="Siège" value="Yopougon, Abidjan, Côte d'Ivoire" />
           <InfoLine icon={Mail} title="Email" value="onphaci@gmail.com" href="mailto:onphaci@gmail.com" />
-          <InfoLine icon={Phone} title="Téléphone" value="Sur demande" />
-          <div className="overflow-hidden rounded-2xl border border-border">
-            <iframe
-              title="Carte Yopougon Abidjan"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=-4.13,5.30,-4.04,5.36&layer=mapnik"
-              className="h-72 w-full"
-              loading="lazy"
-            />
-          </div>
+          <InfoLine icon={Phone} title="Téléphone" value="+225 07 07 34 85 85 / 07 79 76 85 82" href="tel:+2250707348585" />
+          <IvoryCoastMap />
         </aside>
         <form
           onSubmit={(e) => { e.preventDefault(); setSent(true); }}
