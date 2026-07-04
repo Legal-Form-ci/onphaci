@@ -34,7 +34,6 @@ export function IvoryCoastMap() {
 
       const map = L.map(ref.current, {
         scrollWheelZoom: false,
-        tap: true,
         touchZoom: true,
         dragging: true,
       }).setView([7.54, -5.55], 6);
