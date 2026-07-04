@@ -28,9 +28,12 @@ function PartnersPage() {
               <h2 className="text-2xl font-bold text-ink">Partenaires {g.toLowerCase()}s</h2>
               <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                 {list.map((p) => (
-                  <li key={p.name} className="flex flex-col items-start justify-center rounded-xl border border-border bg-card p-5 min-h-28">
+                  <li key={p.name} className="flex flex-col items-start justify-center gap-3 rounded-xl border border-border bg-card p-5 min-h-28">
+                    {p.logo && (
+                      <img src={p.logo} alt={`Logo ${p.name}`} loading="lazy" className="h-16 w-auto object-contain" />
+                    )}
                     <span className="text-sm font-semibold text-ink leading-snug">{p.name}</span>
-                    {p.country && <span className="mt-2 text-xs text-ink-soft">{p.country}</span>}
+                    {p.country && <span className="text-xs text-ink-soft">{p.country}</span>}
                   </li>
                 ))}
               </ul>

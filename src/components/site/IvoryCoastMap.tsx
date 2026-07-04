@@ -32,7 +32,13 @@ export function IvoryCoastMap() {
       const L = (await import("leaflet")).default;
       if (cancelled || !ref.current || mapRef.current) return;
 
-      const map = L.map(ref.current, { scrollWheelZoom: false }).setView([7.54, -5.55], 6);
+      const map = L.map(ref.current, {
+        scrollWheelZoom: false,
+        touchZoom: true,
+        dragging: true,
+      }).setView([7.54, -5.55], 6);
+      // Fit bounds to markers for responsive framing
+      const bounds = L.latLngBounds([]);
       mapRef.current = map;
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: "© OpenStreetMap",
@@ -56,16 +62,29 @@ export function IvoryCoastMap() {
         L.marker([r.lat, r.lng], { icon: greenIcon })
           .addTo(map)
           .bindPopup(`<strong>${r.name}</strong><br/>ONPHA-CI présent`);
+        bounds.extend([r.lat, r.lng]);
       });
 
       L.marker([HQ.lat, HQ.lng], { icon: redIcon })
         .addTo(map)
         .bindPopup("<strong>Siège ONPHA-CI</strong>")
         .openPopup();
+
+      if (bounds.isValid()) map.fitBounds(bounds, { padding: [24, 24] });
+
+      // Re-fit on resize for mobile rotation / responsive layout changes
+      const onResize = () => {
+        map.invalidateSize();
+        if (bounds.isValid()) map.fitBounds(bounds, { padding: [24, 24] });
+      };
+      window.addEventListener("resize", onResize);
+      (map as unknown as { _cleanupResize?: () => void })._cleanupResize = () =>
+        window.removeEventListener("resize", onResize);
     })();
     return () => {
       cancelled = true;
-      const m = mapRef.current as { remove?: () => void } | null;
+      const m = mapRef.current as { remove?: () => void; _cleanupResize?: () => void } | null;
+      if (m?._cleanupResize) m._cleanupResize();
       if (m && typeof m.remove === "function") m.remove();
       mapRef.current = null;
     };
@@ -73,10 +92,15 @@ export function IvoryCoastMap() {
 
   return (
     <div className="overflow-hidden rounded-2xl border border-border">
-      <div ref={ref} className="h-96 w-full" aria-label="Carte interactive de la présence ONPHA-CI en Côte d'Ivoire" />
-      <div className="flex items-center gap-4 border-t border-border bg-surface-alt px-4 py-2 text-xs text-ink-soft">
+      <div
+        ref={ref}
+        className="h-64 w-full sm:h-80 lg:h-96"
+        aria-label="Carte interactive de la présence ONPHA-CI en Côte d'Ivoire"
+      />
+      <div className="flex flex-wrap items-center gap-3 border-t border-border bg-surface-alt px-4 py-2 text-xs text-ink-soft">
         <span className="inline-flex items-center gap-1.5"><span className="inline-block size-3 rounded-full bg-green-600" /> Régions couvertes</span>
         <span className="inline-flex items-center gap-1.5"><span className="inline-block size-3 rounded-full bg-red-600" /> Siège</span>
+        <span className="ml-auto text-[10px] text-ink-soft/70">Touchez un marqueur pour plus d'infos</span>
       </div>
     </div>
   );
