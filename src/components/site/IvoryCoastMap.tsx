@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import "leaflet/dist/leaflet.css";
 
 // 14 régions/districts de Côte d'Ivoire (coord approx du chef-lieu)
 const REGIONS: { name: string; lat: number; lng: number }[] = [
@@ -29,7 +30,6 @@ export function IvoryCoastMap() {
     let cancelled = false;
     (async () => {
       const L = (await import("leaflet")).default;
-      await import("leaflet/dist/leaflet.css");
       if (cancelled || !ref.current || mapRef.current) return;
 
       const map = L.map(ref.current, { scrollWheelZoom: false }).setView([7.54, -5.55], 6);
