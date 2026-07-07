@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone, Facebook, Youtube, Instagram, Linkedin } from "lucide-react";
+import koffiPhoto from "@/assets/inocent-koffi.jpg.asset.json";
 
 const LOGO_SRC = "/onpha-logo.png";
 
@@ -55,6 +56,14 @@ export function SiteFooter() {
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-2 px-4 py-5 text-xs text-ink-soft sm:flex-row sm:items-center lg:px-8">
           <p>© {new Date().getFullYear()} ONPHA-CI. Tous droits réservés. · <Link to="/confidentialite" className="hover:text-brand">Politique de confidentialité</Link></p>
           <p>
+            <img
+              src={koffiPhoto.url}
+              alt="Inocent KOFFI"
+              width={24}
+              height={24}
+              loading="lazy"
+              className="mr-1.5 inline-block size-6 rounded-full object-cover align-middle ring-1 ring-border"
+            />
             Par{" "}
             <a
               href="https://ikoffi.agricapital.ci"
