@@ -2,7 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/annuaire/organisations")({
-  head: () => ({ meta: [{ title: "Organisations de personnes handicapées — ONPHA-CI" }] }),
+  head: () => ({
+    meta: [
+      { title: "Organisations de personnes handicapées — ONPHA-CI" },
+      { name: "description", content: "Faîtières, associations et structures partenaires actives sur l'ensemble du territoire ivoirien pour l'inclusion des personnes handicapées." },
+      { property: "og:title", content: "Organisations de personnes handicapées — Annuaire ONPHA-CI" },
+      { property: "og:description", content: "Répertoire des faîtières et associations œuvrant pour les personnes handicapées en Côte d'Ivoire." },
+      { property: "og:url", content: "https://onphaci.lovable.app/annuaire/organisations" },
+    ],
+    links: [{ rel: "canonical", href: "https://onphaci.lovable.app/annuaire/organisations" }],
+  }),
   component: () => (
     <>
       <PageHero eyebrow="Annuaire" title="Organisations de personnes handicapées" lead="Faîtières, associations et structures partenaires actives sur l'ensemble du territoire ivoirien." />

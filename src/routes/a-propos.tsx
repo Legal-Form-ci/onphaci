@@ -9,7 +9,9 @@ export const Route = createFileRoute("/a-propos")({
       { name: "description", content: "Histoire, mission, vision et valeurs de l'ONPHA-CI, ONG ivoirienne fondée en 2010 à Yopougon pour l'inclusion des personnes sourdes." },
       { property: "og:title", content: "À propos de l'ONPHA-CI" },
       { property: "og:description", content: "14 ans au service de l'inclusion auditive en Côte d'Ivoire." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/a-propos" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/a-propos" }],
   }),
   component: AboutPage,
 });

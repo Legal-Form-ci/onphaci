@@ -2,7 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/annuaire/ecoles-specialisees")({
-  head: () => ({ meta: [{ title: "Écoles spécialisées — Annuaire ONPHA-CI" }] }),
+  head: () => ({
+    meta: [
+      { title: "Écoles spécialisées — Annuaire ONPHA-CI" },
+      { name: "description", content: "Recensement des établissements spécialisés accueillant les enfants sourds et malentendants en Côte d'Ivoire." },
+      { property: "og:title", content: "Écoles spécialisées — Annuaire ONPHA-CI" },
+      { property: "og:description", content: "Répertoire des écoles spécialisées pour enfants sourds et malentendants en Côte d'Ivoire." },
+      { property: "og:url", content: "https://onphaci.lovable.app/annuaire/ecoles-specialisees" },
+    ],
+    links: [{ rel: "canonical", href: "https://onphaci.lovable.app/annuaire/ecoles-specialisees" }],
+  }),
   component: () => (
     <>
       <PageHero eyebrow="Annuaire" title="Écoles spécialisées" lead="Recensement des établissements spécialisés accueillant les enfants sourds et malentendants en Côte d'Ivoire." />

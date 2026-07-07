@@ -1,0 +1,24 @@
+# ONPHA-CI
+
+> Organisation Nationale des Parents pour Handicapés Auditifs de Côte d'Ivoire — ONG fondée en 2010 œuvrant pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire.
+
+## Pages
+
+- [Accueil](/): Présentation, actualités et projets phares de l'ONPHA-CI.
+- [À propos](/a-propos): Histoire, mission, vision et valeurs depuis 2010.
+- [Projets](/projets): DéfiSens'AO, Handicap-Vie-Solidarité, sport et inclusion scolaire, prévention VIH.
+- [Actualités](/actualites): Actions, événements, plaidoyer et vie associative.
+- [Médiathèque](/mediatheque): Photos et vidéos des actions et événements.
+- [Partenaires](/partenaires): Partenaires financiers, techniques et institutionnels.
+- [Faire un don](/dons): Soutien via Mobile Money (MTN, Orange, Wave) ou carte bancaire.
+- [Contact](/contact): Coordonnées et formulaire de contact.
+
+## Annuaire
+
+- [Écoles spécialisées](/annuaire/ecoles-specialisees): Établissements spécialisés pour enfants sourds.
+- [Écoles inclusives](/annuaire/ecoles-inclusives): Écoles ordinaires engagées dans l'inclusion.
+- [Organisations](/annuaire/organisations): Faîtières et associations partenaires.
+
+## Optional
+
+- [Politique de confidentialité](/confidentialite): Traitement des données personnelles.

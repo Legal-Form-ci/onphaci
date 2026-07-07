@@ -10,7 +10,9 @@ export const Route = createFileRoute("/projets")({
       { name: "description", content: "Découvrez les projets de l'ONPHA-CI : DéfiSens'AO, Handicap-Vie-Solidarité, sport et inclusion scolaire, prévention VIH et plus." },
       { property: "og:title", content: "Les projets de l'ONPHA-CI" },
       { property: "og:description", content: "Plaidoyer, santé, éducation inclusive, langue des signes." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/projets" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/projets" }],
   }),
   component: ProjectsLayout,
 });

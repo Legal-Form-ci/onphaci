@@ -11,7 +11,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Contactez l'ONPHA-CI à Yopougon, Abidjan. Email, téléphone et formulaire de contact." },
       { property: "og:title", content: "Contacter ONPHA-CI" },
       { property: "og:description", content: "Écrivez-nous, rejoignez-nous, soutenez-nous." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/contact" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/contact" }],
   }),
   component: ContactPage,
 });

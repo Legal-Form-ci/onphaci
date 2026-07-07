@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as MediathequeRouteImport } from './routes/mediatheque'
@@ -25,6 +26,11 @@ import { Route as AnnuaireEcolesSpecialiseesRouteImport } from './routes/annuair
 import { Route as AnnuaireEcolesInclusivesRouteImport } from './routes/annuaire.ecoles-inclusives'
 import { Route as ActualitesSlugRouteImport } from './routes/actualites.$slug'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProjetsRoute = ProjetsRouteImport.update({
   id: '/projets',
   path: '/projets',
@@ -114,6 +120,7 @@ export interface FileRoutesByFullPath {
   '/mediatheque': typeof MediathequeRoute
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actualites/$slug': typeof ActualitesSlugRoute
   '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
   '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
@@ -131,6 +138,7 @@ export interface FileRoutesByTo {
   '/mediatheque': typeof MediathequeRoute
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actualites/$slug': typeof ActualitesSlugRoute
   '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
   '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
@@ -149,6 +157,7 @@ export interface FileRoutesById {
   '/mediatheque': typeof MediathequeRoute
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/actualites/$slug': typeof ActualitesSlugRoute
   '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
   '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
+    | '/sitemap.xml'
     | '/actualites/$slug'
     | '/annuaire/ecoles-inclusives'
     | '/annuaire/ecoles-specialisees'
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
+    | '/sitemap.xml'
     | '/actualites/$slug'
     | '/annuaire/ecoles-inclusives'
     | '/annuaire/ecoles-specialisees'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
+    | '/sitemap.xml'
     | '/actualites/$slug'
     | '/annuaire/ecoles-inclusives'
     | '/annuaire/ecoles-specialisees'
@@ -220,6 +232,7 @@ export interface RootRouteChildren {
   MediathequeRoute: typeof MediathequeRoute
   PartenairesRoute: typeof PartenairesRoute
   ProjetsRoute: typeof ProjetsRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   AnnuaireEcolesInclusivesRoute: typeof AnnuaireEcolesInclusivesRoute
   AnnuaireEcolesSpecialiseesRoute: typeof AnnuaireEcolesSpecialiseesRoute
   AnnuaireOrganisationsRoute: typeof AnnuaireOrganisationsRoute
@@ -227,6 +240,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/projets': {
       id: '/projets'
       path: '/projets'
@@ -369,6 +389,7 @@ const rootRouteChildren: RootRouteChildren = {
   MediathequeRoute: MediathequeRoute,
   PartenairesRoute: PartenairesRoute,
   ProjetsRoute: ProjetsRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   AnnuaireEcolesInclusivesRoute: AnnuaireEcolesInclusivesRoute,
   AnnuaireEcolesSpecialiseesRoute: AnnuaireEcolesSpecialiseesRoute,
   AnnuaireOrganisationsRoute: AnnuaireOrganisationsRoute,
