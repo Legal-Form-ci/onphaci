@@ -84,6 +84,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "ONPHA-CI" },
       { name: "twitter:card", content: "summary" },
+      { title: "Accueil — ONPHA-CI, inclusion des personnes sourdes en Côte d'Ivoire" },
+      { property: "og:title", content: "Accueil — ONPHA-CI, inclusion des personnes sourdes en Côte d'Ivoire" },
+      { name: "twitter:title", content: "Accueil — ONPHA-CI, inclusion des personnes sourdes en Côte d'Ivoire" },
+      { name: "description", content: "Depuis 2010, l'ONPHA-CI agit pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
+      { property: "og:description", content: "Depuis 2010, l'ONPHA-CI agit pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
+      { name: "twitter:description", content: "Depuis 2010, l'ONPHA-CI agit pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/OI6nUHN0rMdlKjHmlXGUEQqHcM52/social-images/social-1783454851921-Logo_ONPHA-CI.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/OI6nUHN0rMdlKjHmlXGUEQqHcM52/social-images/social-1783454851921-Logo_ONPHA-CI.webp" },
     ],
     links: [
       {

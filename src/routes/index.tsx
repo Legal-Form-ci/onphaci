@@ -11,8 +11,8 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Accueil — ONPHA-CI, inclusion des personnes sourdes en Côte d'Ivoire" },
       { name: "description", content: "Depuis 2010, l'ONPHA-CI agit pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
-      { property: "og:title", content: "ONPHA-CI — Ensemble pour l'inclusion auditive" },
-      { property: "og:description", content: "Plaidoyer, éducation inclusive, santé et langue des signes." },
+      { property: "og:title", content: "Accueil — ONPHA-CI, inclusion des personnes sourdes en Côte d'Ivoire" },
+      { property: "og:description", content: "Depuis 2010, l'ONPHA-CI agit pour l'inclusion sociale, scolaire et professionnelle des personnes sourdes et malentendantes en Côte d'Ivoire." },
       { property: "og:url", content: "https://onphaci.lovable.app/" },
     ],
     links: [{ rel: "canonical", href: "https://onphaci.lovable.app/" }],
