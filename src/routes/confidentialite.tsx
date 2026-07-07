@@ -8,7 +8,9 @@ export const Route = createFileRoute("/confidentialite")({
       { name: "description", content: "Comment l'ONPHA-CI collecte, utilise et protège vos données personnelles, conformément au RGPD et à la loi ivoirienne sur la protection des données." },
       { property: "og:title", content: "Politique de confidentialité — ONPHA-CI" },
       { property: "og:description", content: "Vos données, vos droits. Engagement de confidentialité de l'ONPHA-CI." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/confidentialite" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/confidentialite" }],
   }),
   component: PrivacyPage,
 });

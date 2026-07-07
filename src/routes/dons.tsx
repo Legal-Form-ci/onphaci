@@ -14,7 +14,9 @@ export const Route = createFileRoute("/dons")({
       { name: "description", content: "Soutenez l'ONPHA-CI. Don sécurisé par Mobile Money (MTN, Orange, Wave) ou carte bancaire via CinetPay." },
       { property: "og:title", content: "Soutenez l'ONPHA-CI" },
       { property: "og:description", content: "Votre don finance la langue des signes, le dépistage et l'accompagnement des familles." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/dons" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/dons" }],
   }),
   component: DonatePage,
 });

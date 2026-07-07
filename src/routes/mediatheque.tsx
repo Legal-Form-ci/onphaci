@@ -11,7 +11,9 @@ export const Route = createFileRoute("/mediatheque")({
       { name: "description", content: "Photos et vidéos des actions, événements et projets de l'ONPHA-CI." },
       { property: "og:title", content: "Médiathèque ONPHA-CI" },
       { property: "og:description", content: "Galerie photo des projets et événements de l'ONPHA-CI." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/mediatheque" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/mediatheque" }],
   }),
   component: MediaPage,
 });

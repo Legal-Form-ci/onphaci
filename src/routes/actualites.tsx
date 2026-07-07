@@ -11,7 +11,9 @@ export const Route = createFileRoute("/actualites")({
       { name: "description", content: "Toutes les actualités de l'ONPHA-CI : projets, plaidoyer, événements, vie associative." },
       { property: "og:title", content: "Actualités ONPHA-CI" },
       { property: "og:description", content: "Suivez nos actions, événements et publications." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/actualites" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/actualites" }],
   }),
   component: NewsLayout,
 });

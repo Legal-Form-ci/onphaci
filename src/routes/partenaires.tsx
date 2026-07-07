@@ -9,7 +9,9 @@ export const Route = createFileRoute("/partenaires")({
       { name: "description", content: "Partenaires financiers, techniques et institutionnels de l'ONPHA-CI : AFD, Ambassade de France, Fondation Orange, RIP-EPT et plus." },
       { property: "og:title", content: "Les partenaires de l'ONPHA-CI" },
       { property: "og:description", content: "Une coalition d'acteurs au service de l'inclusion auditive." },
-    ],
+    { property: "og:url", content: "https://onphaci.lovable.app/partenaires" },
+  ],
+  links: [{ rel: "canonical", href: "https://onphaci.lovable.app/partenaires" }],
   }),
   component: PartnersPage,
 });
