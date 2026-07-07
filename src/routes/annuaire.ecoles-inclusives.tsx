@@ -2,7 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 
 export const Route = createFileRoute("/annuaire/ecoles-inclusives")({
-  head: () => ({ meta: [{ title: "Écoles inclusives — Annuaire ONPHA-CI" }] }),
+  head: () => ({
+    meta: [
+      { title: "Écoles inclusives — Annuaire ONPHA-CI" },
+      { name: "description", content: "Annuaire des écoles ordinaires ivoiriennes engagées dans l'accueil et l'accompagnement des élèves sourds et malentendants." },
+      { property: "og:title", content: "Écoles inclusives — Annuaire ONPHA-CI" },
+      { property: "og:description", content: "Établissements ordinaires engagés dans l'inclusion des élèves en situation de handicap auditif en Côte d'Ivoire." },
+      { property: "og:url", content: "https://onphaci.lovable.app/annuaire/ecoles-inclusives" },
+    ],
+    links: [{ rel: "canonical", href: "https://onphaci.lovable.app/annuaire/ecoles-inclusives" }],
+  }),
   component: () => (
     <>
       <PageHero eyebrow="Annuaire" title="Écoles inclusives" lead="Établissements ordinaires engagés dans l'accueil et l'accompagnement des élèves en situation de handicap auditif." />
