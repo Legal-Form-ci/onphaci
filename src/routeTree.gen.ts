@@ -21,6 +21,7 @@ import { Route as ActualitesRouteImport } from './routes/actualites'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjetsSlugRouteImport } from './routes/projets.$slug'
+import { Route as MediathequeVideosRouteImport } from './routes/mediatheque.videos'
 import { Route as AnnuaireOrganisationsRouteImport } from './routes/annuaire.organisations'
 import { Route as AnnuaireEcolesSpecialiseesRouteImport } from './routes/annuaire.ecoles-specialisees'
 import { Route as AnnuaireEcolesInclusivesRouteImport } from './routes/annuaire.ecoles-inclusives'
@@ -86,6 +87,11 @@ const ProjetsSlugRoute = ProjetsSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ProjetsRoute,
 } as any)
+const MediathequeVideosRoute = MediathequeVideosRouteImport.update({
+  id: '/videos',
+  path: '/videos',
+  getParentRoute: () => MediathequeRoute,
+} as any)
 const AnnuaireOrganisationsRoute = AnnuaireOrganisationsRouteImport.update({
   id: '/annuaire/organisations',
   path: '/annuaire/organisations',
@@ -117,7 +123,7 @@ export interface FileRoutesByFullPath {
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
-  '/mediatheque': typeof MediathequeRoute
+  '/mediatheque': typeof MediathequeRouteWithChildren
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
   '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
   '/annuaire/organisations': typeof AnnuaireOrganisationsRoute
+  '/mediatheque/videos': typeof MediathequeVideosRoute
   '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -135,7 +142,7 @@ export interface FileRoutesByTo {
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
-  '/mediatheque': typeof MediathequeRoute
+  '/mediatheque': typeof MediathequeRouteWithChildren
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
   '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
   '/annuaire/organisations': typeof AnnuaireOrganisationsRoute
+  '/mediatheque/videos': typeof MediathequeVideosRoute
   '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRoutesById {
@@ -154,7 +162,7 @@ export interface FileRoutesById {
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
-  '/mediatheque': typeof MediathequeRoute
+  '/mediatheque': typeof MediathequeRouteWithChildren
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/annuaire/ecoles-inclusives': typeof AnnuaireEcolesInclusivesRoute
   '/annuaire/ecoles-specialisees': typeof AnnuaireEcolesSpecialiseesRoute
   '/annuaire/organisations': typeof AnnuaireOrganisationsRoute
+  '/mediatheque/videos': typeof MediathequeVideosRoute
   '/projets/$slug': typeof ProjetsSlugRoute
 }
 export interface FileRouteTypes {
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/annuaire/ecoles-inclusives'
     | '/annuaire/ecoles-specialisees'
     | '/annuaire/organisations'
+    | '/mediatheque/videos'
     | '/projets/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/annuaire/ecoles-inclusives'
     | '/annuaire/ecoles-specialisees'
     | '/annuaire/organisations'
+    | '/mediatheque/videos'
     | '/projets/$slug'
   id:
     | '__root__'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/annuaire/ecoles-inclusives'
     | '/annuaire/ecoles-specialisees'
     | '/annuaire/organisations'
+    | '/mediatheque/videos'
     | '/projets/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -229,7 +241,7 @@ export interface RootRouteChildren {
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   DonsRoute: typeof DonsRoute
-  MediathequeRoute: typeof MediathequeRoute
+  MediathequeRoute: typeof MediathequeRouteWithChildren
   PartenairesRoute: typeof PartenairesRoute
   ProjetsRoute: typeof ProjetsRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -324,6 +336,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjetsSlugRouteImport
       parentRoute: typeof ProjetsRoute
     }
+    '/mediatheque/videos': {
+      id: '/mediatheque/videos'
+      path: '/videos'
+      fullPath: '/mediatheque/videos'
+      preLoaderRoute: typeof MediathequeVideosRouteImport
+      parentRoute: typeof MediathequeRoute
+    }
     '/annuaire/organisations': {
       id: '/annuaire/organisations'
       path: '/annuaire/organisations'
@@ -367,6 +386,18 @@ const ActualitesRouteWithChildren = ActualitesRoute._addFileChildren(
   ActualitesRouteChildren,
 )
 
+interface MediathequeRouteChildren {
+  MediathequeVideosRoute: typeof MediathequeVideosRoute
+}
+
+const MediathequeRouteChildren: MediathequeRouteChildren = {
+  MediathequeVideosRoute: MediathequeVideosRoute,
+}
+
+const MediathequeRouteWithChildren = MediathequeRoute._addFileChildren(
+  MediathequeRouteChildren,
+)
+
 interface ProjetsRouteChildren {
   ProjetsSlugRoute: typeof ProjetsSlugRoute
 }
@@ -386,7 +417,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   DonsRoute: DonsRoute,
-  MediathequeRoute: MediathequeRoute,
+  MediathequeRoute: MediathequeRouteWithChildren,
   PartenairesRoute: PartenairesRoute,
   ProjetsRoute: ProjetsRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
