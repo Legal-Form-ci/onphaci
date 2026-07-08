@@ -23,7 +23,13 @@ const NAV: NavItem[] = [
       { to: "/annuaire/organisations", label: "Organisations de personnes handicapées" },
     ],
   },
-  { to: "/mediatheque", label: "Photo / Vidéo" },
+  {
+    label: "Médiathèque",
+    children: [
+      { to: "/mediatheque", label: "Photos" },
+      { to: "/mediatheque/videos", label: "Vidéos" },
+    ],
+  },
   { to: "/partenaires", label: "Partenaires" },
   { to: "/contact", label: "Contact" },
 ];
