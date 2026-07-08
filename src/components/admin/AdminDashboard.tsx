@@ -241,7 +241,10 @@ function PartnersModule() {
     <div>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="font-display text-lg font-semibold text-ink">Partenaires <span className="ml-2 text-xs font-normal text-ink-soft">({items.length})</span></h2>
-        <button onClick={() => setEditing({ sort_order: 0 })} className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"><Plus className="size-4" /> Ajouter</button>
+        <div className="flex gap-2">
+          <button onClick={async () => { try { const r = await importPartnersFromOnphaci(); alert(`Import terminé : ${r.inserted} nouveau(x) partenaire(s) sur ${r.total}.`); load(); } catch (e: any) { alert(e.message); } }} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:text-brand"><Upload className="size-4" /> Importer depuis onphaci.org</button>
+          <button onClick={() => setEditing({ sort_order: 0 })} className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"><Plus className="size-4" /> Ajouter</button>
+        </div>
       </div>
       {loading ? <Loader2 className="mx-auto mt-8 size-6 animate-spin text-brand" /> : items.length === 0 ? <EmptyState label="Aucun partenaire CMS. Ceux du fichier restent affichés." /> : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
