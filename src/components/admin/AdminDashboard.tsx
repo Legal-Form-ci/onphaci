@@ -418,3 +418,27 @@ function FormActions({ saving, onSave, onCancel, disabled }: { saving: boolean; 
     </div>
   );
 }
+
+function AiStructureButton({ kind, text, existing, onResult }: { kind: "article" | "project" | "partner"; text: string; existing: Record<string, any>; onResult: (r: any) => void; }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  async function run() {
+    if (!text.trim()) { setErr("Écrivez d'abord du contenu à structurer."); return; }
+    setBusy(true); setErr(null);
+    try {
+      const r = await structureContent({ data: { kind, text, existing } });
+      onResult(r);
+    } catch (e: any) { setErr(e.message || "Erreur IA"); }
+    finally { setBusy(false); }
+  }
+  return (
+    <div className="flex items-center gap-3">
+      <button type="button" onClick={run} disabled={busy}
+        className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent-orange px-4 py-2 text-xs font-semibold text-white shadow hover:brightness-110 disabled:opacity-60">
+        {busy ? <Loader2 className="size-3.5 animate-spin" /> : <Sparkles className="size-3.5" />}
+        Structurer avec l'IA
+      </button>
+      {err && <span className="text-xs text-red-600">{err}</span>}
+    </div>
+  );
+}
