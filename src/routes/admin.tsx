@@ -12,7 +12,7 @@ export const Route = createFileRoute("/admin")({
 
 function AdminGate() {
   const [status, setStatus] = useState<"loading" | "anon" | "auth" | "admin">("loading");
-  const [email, setEmail] = useState("onaphaci@onphaci.org");
+  const [email, setEmail] = useState("admin@onphaci.org");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -34,7 +34,7 @@ function AdminGate() {
   }
   async function onBootstrap() {
     setBusy(true); setMsg(null);
-    try { const r = await bootstrapAdmin(); setMsg(`Compte initialisé : ${r.email}. Mot de passe : @Onaphaci26`); }
+      try { const r = await bootstrapAdmin(); setMsg(`Compte initialisé : ${r.email}. Mot de passe : @Onphaci10`); }
     catch (err: any) { setMsg(err?.message ?? "Erreur"); }
     setBusy(false);
   }
@@ -64,7 +64,7 @@ function AdminGate() {
             className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-border px-5 py-2.5 text-xs font-medium text-ink-soft hover:text-brand">
             Initialiser le compte administrateur
           </button>
-          <p className="mt-3 text-center text-xs text-ink-soft">Identifiant&nbsp;: <code>onaphaci@onphaci.org</code></p>
+          <p className="mt-3 text-center text-xs text-ink-soft">Identifiant&nbsp;: <code>admin@onphaci.org</code></p>
         </form>
       </section>
     );

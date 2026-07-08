@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { LogOut, ShieldCheck, FileText, Briefcase, Handshake, Image as ImageIcon, Plus, Trash2, Pencil, X, Save, Loader2, Upload, ExternalLink } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { importMediaFromOnphaci, importPartnersFromOnphaci } from "@/lib/admin.functions";
 
 type Tab = "articles" | "projects" | "partners" | "media";
 
@@ -240,7 +241,10 @@ function PartnersModule() {
     <div>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="font-display text-lg font-semibold text-ink">Partenaires <span className="ml-2 text-xs font-normal text-ink-soft">({items.length})</span></h2>
-        <button onClick={() => setEditing({ sort_order: 0 })} className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"><Plus className="size-4" /> Ajouter</button>
+        <div className="flex gap-2">
+          <button onClick={async () => { try { const r = await importPartnersFromOnphaci(); alert(`Import terminé : ${r.inserted} nouveau(x) partenaire(s) sur ${r.total}.`); load(); } catch (e: any) { alert(e.message); } }} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:text-brand"><Upload className="size-4" /> Importer depuis onphaci.org</button>
+          <button onClick={() => setEditing({ sort_order: 0 })} className="inline-flex items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark"><Plus className="size-4" /> Ajouter</button>
+        </div>
       </div>
       {loading ? <Loader2 className="mx-auto mt-8 size-6 animate-spin text-brand" /> : items.length === 0 ? <EmptyState label="Aucun partenaire CMS. Ceux du fichier restent affichés." /> : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -317,10 +321,13 @@ function MediaModule() {
     <div>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="font-display text-lg font-semibold text-ink">Médiathèque <span className="ml-2 text-xs font-normal text-ink-soft">({items.length})</span></h2>
+        <div className="flex gap-2">
+        <button onClick={async () => { try { const r = await importMediaFromOnphaci(); setMsg(`Import terminé : ${r.inserted} nouveau(x) média(s) sur ${r.total}.`); load(); } catch (e: any) { setMsg(e.message); } }} className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm hover:text-brand"><Upload className="size-4" /> Importer depuis onphaci.org</button>
         <label className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white hover:bg-brand-dark">
           {uploading ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />} Téléverser
           <input type="file" accept="image/*,video/*" className="hidden" disabled={uploading} onChange={e => { const f = e.target.files?.[0]; if (f) upload(f); e.target.value = ""; }} />
         </label>
+        </div>
       </div>
       {msg && <p className="mb-3 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{msg}</p>}
       {loading ? <Loader2 className="mx-auto mt-8 size-6 animate-spin text-brand" /> : items.length === 0 ? <EmptyState label="Aucun média. Téléversez images ou vidéos pour les réutiliser dans les articles." /> : (
