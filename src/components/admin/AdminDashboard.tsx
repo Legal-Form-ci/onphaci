@@ -1,7 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
-import { LogOut, ShieldCheck, FileText, Briefcase, Handshake, Image as ImageIcon, Plus, Trash2, Pencil, X, Save, Loader2, Upload, ExternalLink } from "lucide-react";
+import { LogOut, ShieldCheck, FileText, Briefcase, Handshake, Image as ImageIcon, Plus, Trash2, Pencil, X, Save, Loader2, Upload, ExternalLink, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { importMediaFromOnphaci, importPartnersFromOnphaci } from "@/lib/admin.functions";
+import { structureContent } from "@/lib/ai-structure.functions";
+import { MediaUpload } from "./MediaUpload";
 
 type Tab = "articles" | "projects" | "partners" | "media";
 
@@ -137,9 +139,23 @@ function ArticleForm({ value, onSave, onCancel }: { value: Partial<Article>; onS
           <Field label="Slug (URL)" hint="Auto-généré si vide"><input type="text" value={v.slug || ""} onChange={e => setV({ ...v, slug: e.target.value })} className={input} placeholder={v.title ? slugify(v.title) : ""} /></Field>
           <Field label="Catégorie"><input type="text" value={v.category || ""} onChange={e => setV({ ...v, category: e.target.value })} className={input} placeholder="Actualité, Projet…" /></Field>
         </div>
-        <Field label="Image de couverture (URL)"><input type="url" value={v.cover_url || ""} onChange={e => setV({ ...v, cover_url: e.target.value })} className={input} placeholder="https://…" /></Field>
+        <Field label="Image de couverture">
+          <MediaUpload value={v.cover_url} onChange={(u) => setV({ ...v, cover_url: u })} accept="image/*" kind="image" />
+        </Field>
         <Field label="Résumé"><textarea value={v.excerpt || ""} onChange={e => setV({ ...v, excerpt: e.target.value })} className={input} rows={2} /></Field>
-        <Field label="Contenu (HTML)"><textarea value={v.content_html || ""} onChange={e => setV({ ...v, content_html: e.target.value })} className={`${input} font-mono text-xs`} rows={10} /></Field>
+        <Field label="Contenu (HTML)" hint="Écrivez librement puis cliquez « Structurer avec l'IA » : titre, slug, catégorie, résumé et HTML seront corrigés et remplis automatiquement.">
+          <div className="space-y-2">
+            <textarea value={v.content_html || ""} onChange={e => setV({ ...v, content_html: e.target.value })} className={`${input} font-mono text-xs`} rows={10} />
+            <AiStructureButton kind="article" text={v.content_html || ""} existing={{ title: v.title, category: v.category, excerpt: v.excerpt }}
+              onResult={(r) => setV({ ...v,
+                title: v.title || r.title || "",
+                slug: v.slug || r.slug || "",
+                category: v.category || r.category || "",
+                excerpt: v.excerpt || r.excerpt || "",
+                content_html: r.content_html || v.content_html || "",
+              })} />
+          </div>
+        </Field>
         <Field label="Statut">
           <select value={v.status || "draft"} onChange={e => setV({ ...v, status: e.target.value as any })} className={input}>
             <option value="draft">Brouillon</option>
@@ -214,9 +230,22 @@ function ProjectForm({ value, onSave, onCancel }: { value: Partial<Project>; onS
         <Field label="Slug"><input value={v.slug || ""} onChange={e => setV({ ...v, slug: e.target.value })} className={input} placeholder={v.title ? slugify(v.title) : ""} /></Field>
         <Field label="Ordre"><input type="number" value={v.sort_order ?? 0} onChange={e => setV({ ...v, sort_order: parseInt(e.target.value || "0", 10) })} className={input} /></Field>
       </div>
-      <Field label="Image (URL)"><input value={v.cover_url || ""} onChange={e => setV({ ...v, cover_url: e.target.value })} className={input} /></Field>
+      <Field label="Image de couverture">
+        <MediaUpload value={v.cover_url} onChange={(u) => setV({ ...v, cover_url: u })} accept="image/*" kind="image" />
+      </Field>
       <Field label="Résumé"><textarea value={v.summary || ""} onChange={e => setV({ ...v, summary: e.target.value })} className={input} rows={2} /></Field>
-      <Field label="Description (HTML)"><textarea value={v.description_html || ""} onChange={e => setV({ ...v, description_html: e.target.value })} className={`${input} font-mono text-xs`} rows={8} /></Field>
+      <Field label="Description (HTML)" hint="Écrivez librement puis cliquez « Structurer avec l'IA ».">
+        <div className="space-y-2">
+          <textarea value={v.description_html || ""} onChange={e => setV({ ...v, description_html: e.target.value })} className={`${input} font-mono text-xs`} rows={8} />
+          <AiStructureButton kind="project" text={v.description_html || ""} existing={{ title: v.title, summary: v.summary }}
+            onResult={(r) => setV({ ...v,
+              title: v.title || r.title || "",
+              slug: v.slug || r.slug || "",
+              summary: v.summary || r.summary || "",
+              description_html: r.description_html || v.description_html || "",
+            })} />
+        </div>
+      </Field>
       <Field label="Statut"><select value={v.status || "draft"} onChange={e => setV({ ...v, status: e.target.value as any })} className={input}><option value="draft">Brouillon</option><option value="published">Publié</option></select></Field>
       <FormActions saving={saving} onCancel={onCancel} onSave={async () => { setSaving(true); await onSave(v); setSaving(false); }} disabled={!v.title} />
     </div>
@@ -275,7 +304,9 @@ function PartnerForm({ value, onSave, onCancel }: { value: Partial<Partner>; onS
   return (
     <div className="grid gap-4">
       <Field label="Nom" required><input value={v.name || ""} onChange={e => setV({ ...v, name: e.target.value })} className={input} /></Field>
-      <Field label="Logo (URL)"><input value={v.logo_url || ""} onChange={e => setV({ ...v, logo_url: e.target.value })} className={input} /></Field>
+      <Field label="Logo">
+        <MediaUpload value={v.logo_url} onChange={(u) => setV({ ...v, logo_url: u })} accept="image/*" kind="image" />
+      </Field>
       <Field label="Site web"><input value={v.website_url || ""} onChange={e => setV({ ...v, website_url: e.target.value })} className={input} /></Field>
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Catégorie"><input value={v.category || ""} onChange={e => setV({ ...v, category: e.target.value })} className={input} /></Field>
@@ -384,6 +415,30 @@ function FormActions({ saving, onSave, onCancel, disabled }: { saving: boolean; 
       <button onClick={onSave} disabled={saving || disabled} className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-2 text-sm font-semibold text-white hover:bg-brand-dark disabled:opacity-60">
         {saving ? <Loader2 className="size-4 animate-spin" /> : <Save className="size-4" />} Enregistrer
       </button>
+    </div>
+  );
+}
+
+function AiStructureButton({ kind, text, existing, onResult }: { kind: "article" | "project" | "partner"; text: string; existing: Record<string, any>; onResult: (r: any) => void; }) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  async function run() {
+    if (!text.trim()) { setErr("Écrivez d'abord du contenu à structurer."); return; }
+    setBusy(true); setErr(null);
+    try {
+      const r = await structureContent({ data: { kind, text, existing } });
+      onResult(r);
+    } catch (e: any) { setErr(e.message || "Erreur IA"); }
+    finally { setBusy(false); }
+  }
+  return (
+    <div className="flex items-center gap-3">
+      <button type="button" onClick={run} disabled={busy}
+        className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-brand to-accent-orange px-4 py-2 text-xs font-semibold text-white shadow hover:brightness-110 disabled:opacity-60">
+        {busy ? <Loader2 className="size-3.5 animate-spin" /> : <Sparkles className="size-3.5" />}
+        Structurer avec l'IA
+      </button>
+      {err && <span className="text-xs text-red-600">{err}</span>}
     </div>
   );
 }
