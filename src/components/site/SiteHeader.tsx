@@ -11,7 +11,8 @@ type NavItem =
 
 const NAV: NavItem[] = [
   { to: "/", label: "Accueil" },
-  { to: "/a-propos", label: "Historique" },
+  { to: "/a-propos", label: "À propos" },
+  { to: "/historique", label: "Historique" },
   { to: "/actualites", label: "Actualité" },
   { to: "/dons", label: "Dons" },
   { to: "/projets", label: "Projets" },
