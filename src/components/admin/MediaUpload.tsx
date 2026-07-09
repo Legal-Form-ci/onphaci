@@ -36,7 +36,12 @@ export function MediaUpload({
         cacheControl: "31536000", upsert: false, contentType: file.type,
       });
       if (upErr) throw upErr;
-      const { data: pub } = supabase.storage.from("media").getPublicUrl(path);
+      // Bucket is private (workspace policy blocks public buckets).
+      // Generate a long-lived signed URL (1 year) so the asset is displayable on the site.
+      const { data: signed, error: signErr } = await supabase.storage.from("media").createSignedUrl(path, 60 * 60 * 24 * 365);
+      if (signErr || !signed?.signedUrl) throw signErr ?? new Error("URL signée indisponible");
+      const publicUrl = signed.signedUrl;
+      const pub = { publicUrl };
       // Register in media_assets (dedupe on url)
       const { data: existing } = await supabase.from("media_assets").select("id").eq("url", pub.publicUrl).maybeSingle();
       if (!existing) {
