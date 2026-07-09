@@ -13,6 +13,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as PartenairesRouteImport } from './routes/partenaires'
 import { Route as MediathequeRouteImport } from './routes/mediatheque'
+import { Route as HistoriqueRouteImport } from './routes/historique'
 import { Route as DonsRouteImport } from './routes/dons'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
@@ -45,6 +46,11 @@ const PartenairesRoute = PartenairesRouteImport.update({
 const MediathequeRoute = MediathequeRouteImport.update({
   id: '/mediatheque',
   path: '/mediatheque',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoriqueRoute = HistoriqueRouteImport.update({
+  id: '/historique',
+  path: '/historique',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DonsRoute = DonsRouteImport.update({
@@ -123,6 +129,7 @@ export interface FileRoutesByFullPath {
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
+  '/historique': typeof HistoriqueRoute
   '/mediatheque': typeof MediathequeRouteWithChildren
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
@@ -142,6 +149,7 @@ export interface FileRoutesByTo {
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
+  '/historique': typeof HistoriqueRoute
   '/mediatheque': typeof MediathequeRouteWithChildren
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/dons': typeof DonsRoute
+  '/historique': typeof HistoriqueRoute
   '/mediatheque': typeof MediathequeRouteWithChildren
   '/partenaires': typeof PartenairesRoute
   '/projets': typeof ProjetsRouteWithChildren
@@ -183,6 +192,7 @@ export interface FileRouteTypes {
     | '/confidentialite'
     | '/contact'
     | '/dons'
+    | '/historique'
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
@@ -202,6 +212,7 @@ export interface FileRouteTypes {
     | '/confidentialite'
     | '/contact'
     | '/dons'
+    | '/historique'
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
@@ -221,6 +232,7 @@ export interface FileRouteTypes {
     | '/confidentialite'
     | '/contact'
     | '/dons'
+    | '/historique'
     | '/mediatheque'
     | '/partenaires'
     | '/projets'
@@ -241,6 +253,7 @@ export interface RootRouteChildren {
   ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   DonsRoute: typeof DonsRoute
+  HistoriqueRoute: typeof HistoriqueRoute
   MediathequeRoute: typeof MediathequeRouteWithChildren
   PartenairesRoute: typeof PartenairesRoute
   ProjetsRoute: typeof ProjetsRouteWithChildren
@@ -278,6 +291,13 @@ declare module '@tanstack/react-router' {
       path: '/mediatheque'
       fullPath: '/mediatheque'
       preLoaderRoute: typeof MediathequeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/historique': {
+      id: '/historique'
+      path: '/historique'
+      fullPath: '/historique'
+      preLoaderRoute: typeof HistoriqueRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dons': {
@@ -417,6 +437,7 @@ const rootRouteChildren: RootRouteChildren = {
   ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   DonsRoute: DonsRoute,
+  HistoriqueRoute: HistoriqueRoute,
   MediathequeRoute: MediathequeRouteWithChildren,
   PartenairesRoute: PartenairesRoute,
   ProjetsRoute: ProjetsRouteWithChildren,

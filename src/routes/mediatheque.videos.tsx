@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Loader2, Play } from "lucide-react";
+import { Loader2, Play, ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/mediatheque/videos")({
   head: () => ({
@@ -20,31 +20,70 @@ export const Route = createFileRoute("/mediatheque/videos")({
 
 interface VideoAsset { id: string; title: string | null; url: string; caption: string | null; }
 
+// Vidéos YouTube importées depuis onphaci.org/category/video/
+const ONPHACI_YT_VIDEOS: { id: string; title: string; source: string }[] = [
+  { id: "OEifUq9jvTk", title: "Incluons les personnes sourdes", source: "https://onphaci.org/incluons-les-personnes-sourdes/" },
+  { id: "J2mGQpIwa9I", title: "La lèpre n'est pas une malédiction", source: "https://onphaci.org/la-lepre-nest-pas-une-malediction/" },
+  { id: "EuVpjcV7Uxc", title: "L'albinisme n'est pas un défaut", source: "https://onphaci.org/lalbinisme-nest-pas-un-defaut/" },
+];
+
+function ytThumb(id: string) {
+  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+
 function VideosPage() {
   const [items, setItems] = useState<VideoAsset[]>([]);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState<VideoAsset | null>(null);
+  const [openFile, setOpenFile] = useState<VideoAsset | null>(null);
+  const [openYt, setOpenYt] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.from("media_assets").select("id,title,url,caption").eq("kind", "video").order("created_at", { ascending: false })
       .then(({ data }) => { setItems((data as VideoAsset[]) ?? []); setLoading(false); });
   }, []);
 
+  const ytVideos = useMemo(() => ONPHACI_YT_VIDEOS, []);
+
   return (
     <>
-      <PageHero eyebrow="Médiathèque" title="Nos vidéos" lead="Vidéos des actions, campagnes de sensibilisation et événements de l'ONPHA-CI." />
+      <PageHero eyebrow="Médiathèque" title="Nos vidéos" lead="Vidéos des actions, campagnes de sensibilisation et événements de l'ONPHA-CI, importées depuis onphaci.org." />
       <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+        <h2 className="mb-4 font-display text-xl font-bold text-ink">Vidéos YouTube ONPHA-CI</h2>
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {ytVideos.map((v) => (
+            <li key={v.id}>
+              <button
+                onClick={() => setOpenYt(v.id)}
+                className="group relative block w-full overflow-hidden rounded-xl border border-border bg-black text-left"
+                aria-label={`Lire la vidéo : ${v.title}`}
+              >
+                <img src={ytThumb(v.id)} alt={v.title} className="aspect-video w-full object-cover opacity-90 transition group-hover:opacity-100" loading="lazy" />
+                <span className="pointer-events-none absolute inset-0 grid place-items-center">
+                  <span className="grid size-14 place-items-center rounded-full bg-white/90 text-brand shadow-lg"><Play className="size-6" /></span>
+                </span>
+              </button>
+              <div className="mt-2 flex items-start justify-between gap-2">
+                <p className="text-sm text-ink">{v.title}</p>
+                <a href={v.source} target="_blank" rel="noopener noreferrer" className="shrink-0 text-ink-soft hover:text-brand" aria-label="Article source sur onphaci.org">
+                  <ExternalLink className="size-4" />
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+
+        <h2 className="mt-14 mb-4 font-display text-xl font-bold text-ink">Vidéos téléversées</h2>
         {loading ? (
           <div className="grid place-items-center py-16"><Loader2 className="size-6 animate-spin text-brand" /></div>
         ) : items.length === 0 ? (
           <p className="rounded-xl border border-dashed border-border bg-surface-alt p-10 text-center text-sm text-ink-soft">
-            Aucune vidéo pour le moment. Téléversez des vidéos depuis l'espace administrateur.
+            Aucune vidéo téléversée pour le moment.
           </p>
         ) : (
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {items.map((v) => (
               <li key={v.id}>
-                <button onClick={() => setOpen(v)} className="group relative block w-full overflow-hidden rounded-xl border border-border bg-black">
+                <button onClick={() => setOpenFile(v)} className="group relative block w-full overflow-hidden rounded-xl border border-border bg-black">
                   <video src={v.url} className="aspect-video w-full object-cover opacity-90 transition group-hover:opacity-100" muted playsInline preload="metadata" />
                   <span className="pointer-events-none absolute inset-0 grid place-items-center">
                     <span className="grid size-14 place-items-center rounded-full bg-white/90 text-brand shadow-lg"><Play className="size-6" /></span>
@@ -56,9 +95,22 @@ function VideosPage() {
           </ul>
         )}
       </section>
-      {open && (
-        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 grid place-items-center bg-black/90 p-4" onClick={() => setOpen(null)}>
-          <video src={open.url} controls autoPlay className="max-h-[85dvh] w-auto max-w-5xl rounded-xl" onClick={(e) => e.stopPropagation()} />
+      {openFile && (
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 grid place-items-center bg-black/90 p-4" onClick={() => setOpenFile(null)}>
+          <video src={openFile.url} controls autoPlay className="max-h-[85dvh] w-auto max-w-5xl rounded-xl" onClick={(e) => e.stopPropagation()} />
+        </div>
+      )}
+      {openYt && (
+        <div role="dialog" aria-modal="true" className="fixed inset-0 z-50 grid place-items-center bg-black/90 p-4" onClick={() => setOpenYt(null)}>
+          <div className="aspect-video w-full max-w-5xl" onClick={(e) => e.stopPropagation()}>
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${openYt}?autoplay=1`}
+              title="Lecteur vidéo YouTube ONPHA-CI"
+              className="h-full w-full rounded-xl"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
         </div>
       )}
     </>
