@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ARTICLES, formatDate, getArticle } from "@/data/articles";
-import { ArrowLeft, Share2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { EngagementBar } from "@/components/site/EngagementBar";
+import { Comments } from "@/components/site/Comments";
 
 export const Route = createFileRoute("/actualites/$slug")({
   head: ({ params }) => {
@@ -65,14 +67,9 @@ function ArticleDetail() {
           className="article-prose"
           dangerouslySetInnerHTML={{ __html: a.content_html }}
         />
-        <div className="mt-10 flex flex-wrap items-center gap-3 border-t border-border pt-6">
-          <Share2 className="size-4 text-ink-soft" />
-          <span className="text-sm text-ink-soft">Partager :</span>
-          <a className="text-sm font-medium text-brand hover:underline" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(a.source_url)}`} target="_blank" rel="noopener noreferrer">Facebook</a>
-          <a className="text-sm font-medium text-brand hover:underline" href={`https://wa.me/?text=${encodeURIComponent(a.title + " " + a.source_url)}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a className="text-sm font-medium text-brand hover:underline" href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(a.source_url)}`} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
+        <EngagementBar kind="article" slug={a.slug} title={a.title} shareUrl={typeof window !== "undefined" ? window.location.href : a.source_url} />
       </article>
+      <Comments kind="article" slug={a.slug} />
       {similar.length > 0 && (
         <section className="border-t border-border bg-surface-alt py-16">
           <div className="mx-auto max-w-7xl px-4 lg:px-8">

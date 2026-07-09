@@ -1,6 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { PROJECTS } from "@/data/projects";
 import { ArrowLeft, Calendar, Globe2, Handshake } from "lucide-react";
+import { EngagementBar } from "@/components/site/EngagementBar";
+import { Comments } from "@/components/site/Comments";
 
 export const Route = createFileRoute("/projets/$slug")({
   head: ({ params }) => {
@@ -61,7 +63,9 @@ function ProjectDetail() {
             ))}
           </ul>
         </div>
+        <EngagementBar kind="project" slug={p.slug} title={p.title} shareUrl={typeof window !== "undefined" ? window.location.href : `https://onphaci.lovable.app/projets/${p.slug}`} />
       </section>
+      <Comments kind="project" slug={p.slug} />
     </>
   );
 }

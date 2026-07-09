@@ -59,6 +59,66 @@ export type Database = {
         }
         Relationships: []
       }
+      comments: {
+        Row: {
+          author_avatar: string | null
+          author_name: string
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          slug: string
+          user_id: string
+        }
+        Insert: {
+          author_avatar?: string | null
+          author_name: string
+          body: string
+          created_at?: string
+          id?: string
+          kind: string
+          slug: string
+          user_id: string
+        }
+        Update: {
+          author_avatar?: string | null
+          author_name?: string
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          slug?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      content_engagement: {
+        Row: {
+          id: string
+          kind: string
+          shares: number
+          slug: string
+          updated_at: string
+          views: number
+        }
+        Insert: {
+          id?: string
+          kind: string
+          shares?: number
+          slug: string
+          updated_at?: string
+          views?: number
+        }
+        Update: {
+          id?: string
+          kind?: string
+          shares?: number
+          slug?: string
+          updated_at?: string
+          views?: number
+        }
+        Relationships: []
+      }
       media_assets: {
         Row: {
           caption: string | null
@@ -131,6 +191,30 @@ export type Database = {
           sort_order?: number
           updated_at?: string
           website_url?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -223,6 +307,10 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      increment_content_metric: {
+        Args: { _kind: string; _metric: string; _slug: string }
+        Returns: number
       }
       increment_visitor_counter: { Args: never; Returns: number }
     }
