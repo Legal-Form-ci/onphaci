@@ -6,10 +6,14 @@ export interface Partner {
   url?: string;
 }
 
+import mffeLogo from "@/assets/partner-mffe.png.asset.json";
+import afdLogo from "@/assets/partner-afd.png.asset.json";
+import ambassadeLogo from "@/assets/partner-ambassade-france.png.asset.json";
+
 export const PARTNERS: Partner[] = [
-  { name: "Ministère de la Famille, de la Femme et de l'Enfant (MFFE)", type: "Institutionnel", country: "Côte d'Ivoire", logo: "https://onphaci.org/wp-content/uploads/2023/08/Logo-MFFE-5.jpg" },
-  { name: "AFD — Agence Française de Développement", type: "Financier", country: "France" },
-  { name: "Ambassade de France en Côte d'Ivoire", type: "Financier", country: "France / CI" },
+  { name: "Ministère de la Famille, de la Femme et de l'Enfant (MFFE)", type: "Institutionnel", country: "Côte d'Ivoire", logo: mffeLogo.url },
+  { name: "AFD — Agence Française de Développement", type: "Financier", country: "France", logo: afdLogo.url, url: "https://www.afd.fr" },
+  { name: "Ambassade de France en Côte d'Ivoire", type: "Financier", country: "France / CI", logo: ambassadeLogo.url, url: "https://ci.ambafrance.org" },
   { name: "Fondation Orange Côte d'Ivoire", type: "Financier", country: "Côte d'Ivoire" },
   { name: "MTN via AIPA", type: "Financier", country: "Côte d'Ivoire" },
   { name: "VYV3 Pays de la Loire", type: "Technique", country: "France" },
