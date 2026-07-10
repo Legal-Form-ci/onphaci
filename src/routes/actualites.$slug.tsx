@@ -35,6 +35,7 @@ export const Route = createFileRoute("/actualites/$slug")({
 
 function ArticleDetail() {
   const a = Route.useLoaderData();
+  if (!a) return null;
   const similar = ARTICLES.filter((x) => x.category === a.category && x.slug !== a.slug).slice(0, 3);
   return (
     <>
