@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { LogOut, ShieldCheck, FileText, Briefcase, Handshake, Image as ImageIcon, Plus, Trash2, Pencil, X, Save, Loader2, Upload, ExternalLink, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { importMediaFromOnphaci, importPartnersFromOnphaci } from "@/lib/admin.functions";
+import { importMediaFromOnphaci, importPartnersFromOnphaci, importVideosFromOnphaci, importCategoriesFromOnphaci } from "@/lib/admin.functions";
 import { structureContent } from "@/lib/ai-structure.functions";
 import { MediaUpload } from "./MediaUpload";
 
